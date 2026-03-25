@@ -43,6 +43,3 @@ pip-delete-this-directory.txt
 syn_out/
 checkpoints/
 .gradio
-
-# Ignore generated sample .wav files
-**/*.wav
