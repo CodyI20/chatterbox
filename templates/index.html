@@ -60,7 +60,7 @@
             voices.forEach(voice => {
                 let option = document.createElement('option');
                 option.value = voice;
-                option.text = voice;
+                option.text = voice.substring(0, voice.lastIndexOf('.')) || voice;
                 select.appendChild(option);
             });
         });

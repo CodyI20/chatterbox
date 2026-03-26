@@ -26,8 +26,8 @@ except Exception as e:
 # ==========================================
 if torch.cuda.is_available():
     device = "cuda"
-    # Restrict PyTorch to only use vram_to_use*100% of your GPU VRAM (Adjust this fraction as needed!)
-    vram_to_use = 0.4
+    # Restrict PyTorch to only use vram_to_use*100% of the GPU VRAM (Adjust this fraction as needed!)
+    vram_to_use = 1.0
     torch.cuda.set_per_process_memory_fraction(vram_to_use, 0)
     app.logger.info(f"Capped CUDA VRAM usage at {vram_to_use*100}.")
 else:
@@ -89,3 +89,9 @@ def tts():
     except Exception as e:
         app.logger.error(f"Generation error: {e}")
         return jsonify({"error": str(e)}), 500
+
+@app.route("/shutdown",methods=["POST"])
+def shutdown():
+    app.logger.info("Shutdown command received. Closing server...")
+    os._exit(0)
+    return jsonify({"message":"Server shutting down."}), 200
