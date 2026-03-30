@@ -14,11 +14,14 @@ dependencies = [
     "numpy>=2.0.0; python_version >= '3.13'",
     "librosa==0.11.0",
     "s3tokenizer",
-    # torch 2.6.0 supports Python 3.10-3.13; Python 3.14 needs 2.9.0+
-    "torch==2.6.0; python_version < '3.14'",
+    # torch 2.7.0 supports Python 3.10-3.13; Python 3.14 needs 2.9.0+
+    "torch==2.7.0; python_version < '3.14'",
     "torch>=2.9.0; python_version >= '3.14'",
-    "torchaudio==2.6.0; python_version < '3.14'",
+    "torchvision==0.22.0; python_version < '3.14'",
+    "torchvision>=0.24.0; python_version >= '3.14'",
+    "torchaudio==2.7.0; python_version < '3.14'",
     "torchaudio>=2.9.0; python_version >= '3.14'",
+    "torchcodec",
     "transformers==5.2.0",
     "diffusers==0.29.0",
     "resemble-perth @ git+https://github.com/resemble-ai/Perth.git@master",
@@ -41,3 +44,19 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+# ---------------------------------------------------------------------------
+# uv: resolve torch / torchvision / torchaudio from the PyTorch CUDA 12.8
+# wheel index so that GPU-accelerated builds are installed automatically.
+# (equivalent to: pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0
+#                            --index-url https://download.pytorch.org/whl/cu128)
+# ---------------------------------------------------------------------------
+[tool.uv.sources]
+torch       = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+torchaudio  = { index = "pytorch-cu128" }
+
+[[tool.uv.indexes]]
+name = "pytorch-cu128"
+url  = "https://download.pytorch.org/whl/cu128"
+explicit = true
