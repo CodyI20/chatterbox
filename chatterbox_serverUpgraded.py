@@ -38,8 +38,8 @@ app.logger.info(f"Using device: {device}")
 try:
     from chatterbox.tts_turbo import ChatterboxTurboTTS
     model = ChatterboxTurboTTS.from_pretrained(device=device)
-    # Optional: If the model supports it, convert to half-precision to save even more VRAM
-    # model.half() 
+    # from chatterbox.tts import ChatterboxTTS
+    # model = ChatterboxTTS.from_pretrained(device=device)
     app.logger.info("Model loaded successfully!")
 except Exception as e:
     app.logger.error(f"Failed to load model: {e}")
